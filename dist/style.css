@@ -1,0 +1,740 @@
+:root {
+    font-family: Inter, Arial, sans-serif;
+    color: #182438;
+    background: #f3f5f9;
+    font-synthesis: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+
+/* ======================================================
+   MENU LATERAL
+   ====================================================== */
+
+aside {
+    width: 244px;
+    background: #102338;
+    color: #fff;
+    position: fixed;
+    inset: 0 auto 0 0;
+    padding: 36px 24px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    font-size: 25px;
+    font-weight: 750;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: white;
+    text-decoration: none;
+}
+
+.mark {
+    background: #c4f06b;
+    color: #102338;
+
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.caption {
+    font-size: 12px;
+    letter-spacing: 2px;
+
+    color: #95aabc;
+
+    margin: 25px 0 40px;
+}
+
+
+/* ======================================================
+   NAVEGAÇÃO
+   ====================================================== */
+
+nav a {
+    display: flex;
+    gap: 18px;
+
+    color: #93a8bd;
+    text-decoration: none;
+
+    padding: 17px 13px;
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    margin-bottom: 7px;
+}
+
+nav a span {
+    color: #d9e2ec;
+    font-size: 16px;
+}
+
+nav a.active {
+    background: #243b50;
+    color: #c4f06b;
+}
+
+nav a.active span {
+    color: white;
+}
+
+.aside-bottom {
+    margin-top: auto;
+
+    font-size: 12px;
+    line-height: 1.8;
+
+    color: #8fa7bb;
+}
+
+.aside-bottom strong {
+    color: #fff;
+    font-size: 15px;
+}
+
+.aside-bottom p {
+    margin-top: 25px;
+}
+
+
+/* ======================================================
+   CONTEÚDO PRINCIPAL
+   ====================================================== */
+
+main {
+    margin-left: 244px;
+    padding: 0 46px;
+    max-width: 1550px;
+}
+
+header {
+    height: 87px;
+
+    border-bottom: 1px solid #dce2eb;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 12px;
+    letter-spacing: 1px;
+
+    color: #64748b;
+}
+
+.tag {
+    border: 1px solid #ccd6e2;
+
+    padding: 8px 12px;
+    border-radius: 20px;
+
+    letter-spacing: 0;
+}
+
+
+/* ======================================================
+   TÍTULOS E TEXTOS
+   ====================================================== */
+
+h1 {
+    font-size: 36px;
+    letter-spacing: -1.2px;
+
+    margin: 10px 0 14px;
+}
+
+h2 {
+    font-size: 21px;
+    margin: 0 0 18px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+.intro {
+    margin: 34px 0 28px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+
+    color: #4a677f;
+}
+
+.lead {
+    color: #65758b;
+    line-height: 1.7;
+
+    max-width: 760px;
+}
+
+.muted {
+    color: #68788b;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.text-small {
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* ======================================================
+   LAYOUT
+   ====================================================== */
+
+.grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr) 305px;
+
+    gap: 26px;
+}
+
+.panel,
+.card {
+    background: white;
+
+    border: 1px solid #dce2ea;
+    border-radius: 13px;
+
+    padding: 26px;
+}
+
+.panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid #e5e9ef;
+
+    padding-bottom: 19px;
+    margin-bottom: 23px;
+}
+
+.panel-head h2 {
+    margin: 0;
+}
+
+.wide {
+    margin-bottom: 22px;
+}
+
+
+/* ======================================================
+   INDICADORES
+   ====================================================== */
+
+.pill {
+    font-size: 12px;
+
+    background: #eef3f7;
+    color: #496178;
+
+    padding: 6px 10px;
+    border-radius: 20px;
+}
+
+.stepbar {
+    display: flex;
+    gap: 12px;
+
+    margin-bottom: 27px;
+
+    font-size: 14px;
+    color: #788596;
+}
+
+.stepbar b {
+    color: #1d5875;
+}
+
+
+/* ======================================================
+   FORMULÁRIOS
+   ====================================================== */
+
+label {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    margin: 18px 0 8px;
+}
+
+input,
+select {
+    width: 100%;
+
+    border: 1px solid #cbd6e2;
+    border-radius: 7px;
+
+    padding: 13px 14px;
+
+    background: white;
+
+    font-size: 16px;
+    color: #182438;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #638caf;
+    outline-offset: 2px;
+}
+
+
+/* ======================================================
+   BOTÕES
+   ====================================================== */
+
+button,
+.button {
+    border: 0;
+    border-radius: 7px;
+
+    padding: 13px 19px;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    background: #193c56;
+    color: white;
+
+    text-decoration: none;
+
+    display: inline-block;
+}
+
+button:hover,
+.button:hover {
+    background: #2b5876;
+}
+
+button:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.secondary {
+    background: #ecf0f5;
+    color: #27465e;
+}
+
+.secondary:hover {
+    background: #dce5ed;
+}
+
+.link {
+    background: none;
+    color: #365c76;
+    padding: 8px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+
+    margin-top: 23px;
+}
+
+
+/* ======================================================
+   LOGIN
+   ====================================================== */
+
+.login {
+    max-width: 450px;
+
+    margin: 0 auto;
+    padding: 8px 0 22px;
+}
+
+.hint {
+    background: #f3f6fa;
+
+    border: 1px dashed #c7d2df;
+    border-radius: 8px;
+
+    padding: 16px;
+
+    font-size: 14px;
+    line-height: 1.9;
+
+    margin-top: 20px;
+}
+
+code {
+    font-family: Consolas, monospace;
+
+    background: #eaf0f6;
+
+    padding: 2px 5px;
+    border-radius: 4px;
+
+    font-size: 13px;
+}
+
+
+/* ======================================================
+   MENSAGENS
+   ====================================================== */
+
+.error {
+    color: #ae2842;
+    background: #fff0f3;
+
+    padding: 12px;
+    border-radius: 7px;
+
+    font-size: 14px;
+}
+
+.success {
+    padding: 25px;
+
+    background: #f0f8e5;
+
+    border: 1px solid #bedb99;
+    border-radius: 9px;
+}
+
+.notice {
+    border-left: 3px solid #9fcb54;
+
+    padding: 12px 18px;
+
+    background: #eef5e5;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    margin: 22px 0;
+}
+
+
+/* ======================================================
+   PRODUTOS
+   ====================================================== */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+.product {
+    border: 1px solid #dce2eb;
+    border-radius: 10px;
+
+    padding: 20px;
+}
+
+.product .num {
+    font-size: 12px;
+    color: #77889a;
+}
+
+.product h3 {
+    margin: 12px 0;
+}
+
+.price {
+    font-size: 22px;
+    font-weight: 750;
+
+    margin: 18px 0;
+}
+
+.product button {
+    width: 100%;
+}
+
+
+/* ======================================================
+   ESTATÍSTICAS / INFORMAÇÕES
+   ====================================================== */
+
+.stat {
+    border-bottom: 1px solid #e6ebf1;
+
+    padding: 17px 0;
+}
+
+.stat:last-child {
+    border: 0;
+}
+
+.stat strong {
+    display: block;
+
+    font-size: 15px;
+
+    margin-bottom: 5px;
+}
+
+
+/* ======================================================
+   CARRINHO
+   ====================================================== */
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 0;
+
+    border-bottom: 1px solid #e4eaf1;
+
+    gap: 15px;
+}
+
+.row strong {
+    display: block;
+}
+
+
+/* ======================================================
+   TABELA
+   ====================================================== */
+
+.table-wrap {
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 14px;
+    text-align: left;
+}
+
+th {
+    color: #61758b;
+
+    font-size: 12px;
+    letter-spacing: 0.5px;
+
+    background: #f2f5f9;
+}
+
+td,
+th {
+    padding: 17px 13px;
+
+    border-bottom: 1px solid #e0e6ee;
+
+    line-height: 1.6;
+}
+
+td:first-child {
+    white-space: nowrap;
+    font-weight: 700;
+}
+
+
+/* ======================================================
+   GUIA TÉCNICO
+   ====================================================== */
+
+.tech {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+pre {
+    white-space: pre-wrap;
+
+    background: #102338;
+    color: #e4edf4;
+
+    padding: 22px;
+    border-radius: 10px;
+
+    font-size: 14px;
+    line-height: 1.8;
+
+    overflow: auto;
+}
+
+ol,
+ul {
+    padding-left: 22px;
+    line-height: 1.9;
+}
+
+
+/* ======================================================
+   FILTROS
+   ====================================================== */
+
+.filters {
+    display: flex;
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+.filters > * {
+    flex: 1;
+}
+
+
+/* ======================================================
+   LINKS
+   ====================================================== */
+
+a {
+    color: #245574;
+}
+
+
+/* ======================================================
+   RODAPÉ
+   ====================================================== */
+
+footer {
+    font-size: 12px;
+    color: #788799;
+
+    padding: 30px 0;
+}
+
+
+/* ======================================================
+   RESPONSIVIDADE - TABLET
+   ====================================================== */
+
+@media (max-width: 1000px) {
+
+    aside {
+        width: 200px;
+        padding: 28px 16px;
+    }
+
+    main {
+        margin-left: 200px;
+        padding: 0 25px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tech {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* ======================================================
+   RESPONSIVIDADE - CELULAR
+   ====================================================== */
+
+@media (max-width: 650px) {
+
+    aside {
+        position: static;
+
+        width: 100%;
+
+        padding: 20px;
+    }
+
+    .caption,
+    .aside-bottom {
+        display: none;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+
+        margin-top: 15px;
+    }
+
+    nav a {
+        padding: 10px;
+        margin: 0;
+
+        gap: 7px;
+    }
+
+    nav a span {
+        font-size: 14px;
+    }
+
+    main {
+        margin: 0;
+
+        padding: 0 18px;
+    }
+
+    header {
+        height: 60px;
+    }
+
+    h1 {
+        font-size: 29px;
+    }
+
+    .intro {
+        margin: 26px 0;
+    }
+
+    .panel,
+    .card {
+        padding: 19px;
+    }
+
+    .cards,
+    .tech {
+        grid-template-columns: 1fr;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .stepbar {
+        font-size: 12px;
+        gap: 8px;
+    }
+}
