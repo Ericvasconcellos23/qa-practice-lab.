@@ -124,3 +124,13 @@ def test_cep_invalido(pagina, base_url, cep, mensagem):
 
     expect(pagina.get_by_test_id("checkout-error")).to_have_text(mensagem)
     expect(pagina.get_by_test_id("postal-code")).to_be_visible()
+
+def test_busca_sem_resultado(pagina, base_url):
+    entrar(pagina, base_url)
+
+    pagina.get_by_test_id("search").fill("produto inexistente")
+
+    expect(pagina.get_by_test_id("no-products")).to_have_text(
+        "Nenhum produto encontrado."
+    )
+    expect(pagina.get_by_test_id("product-card")).to_have_count(0)

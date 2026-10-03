@@ -97,3 +97,10 @@ Após executar e entender: "Usei uma loja educacional criada com assistência de
 - Adicionados dois casos parametrizados: CEP vazio e CEP inválido.
 - Verificadas as mensagens de erro e a permanência no checkout.
 - Resultado da execução completa: 11 testes aprovados.
+
+## Busca sem resultado — 03/10/2026
+
+- Adicionado teste de busca por produto inexistente.
+- Verificada a mensagem “Nenhum produto encontrado.”
+- Confirmado que nenhum cartão de produto é exibido.
+- Resultado da execução completa: 12 testes aprovados.
