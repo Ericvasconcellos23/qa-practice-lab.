@@ -24,3 +24,12 @@ Título, caso relacionado, versão, navegador, pré-condições, dados fictício
 ## Evolução sugerida
 
 Automatizar busca, ordenação, cancelamento e demais campos obrigatórios. Criar Page Objects para carrinho e checkout. Integrar evidências/Allure apenas depois de compreender o fluxo básico. API e banco exigem uma nova implementação real, não uma descrição no README.
+
+## Execução automatizada — 03/10/2026
+
+- Ambiente: Windows, Python 3.13.2 e Pytest 9.1.1.
+- URL: http://localhost:8000.
+- Comando: python -m pytest -v.
+- Resultado: 7 testes passaram em 11,36 segundos.
+- Cobertura: login válido, três validações de login, remoção de produto,
+  nome obrigatório e compra completa.
