@@ -63,3 +63,23 @@ def test_compra_completa(pagina, base_url):
     expect(pagina.get_by_test_id("order-total")).to_contain_text("219,80")
     pagina.get_by_test_id("back-products").click()
     expect(pagina.get_by_test_id("cart-count")).to_have_text("0")
+
+def test_cancelar_checkout(pagina, base_url):
+    entrar(pagina, base_url)
+
+    # Adiciona a mochila e inicia o checkout.
+    pagina.get_by_test_id("add-mochila").click()
+    pagina.get_by_test_id("open-cart").click()
+    pagina.get_by_test_id("checkout").click()
+
+    # Confirma que chegamos ao checkout antes de cancelar.
+    expect(pagina.get_by_test_id("first-name")).to_be_visible()
+    pagina.get_by_test_id("cancel-checkout").click()
+
+    # Confirma o retorno ao carrinho e a preservação do item.
+    expect(pagina.get_by_test_id("cart-item")).to_have_count(1)
+    expect(pagina.get_by_test_id("cart-item-name")).to_have_text(
+        "Mochila de trabalho"
+    )
+    expect(pagina.get_by_test_id("cart-total")).to_contain_text("129,90")
+    expect(pagina.get_by_test_id("checkout")).to_be_enabled()
