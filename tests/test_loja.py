@@ -1,7 +1,11 @@
 import pytest
 from playwright.sync_api import expect
 from pages.login_page import LoginPage
-
+from pages.produtos_page import ProdutosPage
+from pages.carrinho_page import CarrinhoPage
+from pages.checkout_page import CheckoutPage
+from pages.checkout_overview_page import CheckoutOverviewPage
+from pages.confirmacao_page import ConfirmacaoPage
 
 def entrar(pagina, base_url):
     login = LoginPage(pagina, base_url)
@@ -11,7 +15,9 @@ def entrar(pagina, base_url):
 
 def test_login_valido(pagina, base_url):
     entrar(pagina, base_url)
-    expect(pagina.get_by_test_id("products-title")).to_be_visible()
+
+    produtos = ProdutosPage(pagina)
+    expect(produtos.titulo).to_be_visible()
 
 
 @pytest.mark.parametrize("email,senha,mensagem", [
@@ -23,84 +29,119 @@ def test_login_invalido(pagina, base_url, email, senha, mensagem):
     login = LoginPage(pagina, base_url)
     login.abrir()
     login.fazer_login(email, senha)
-    expect(pagina.get_by_test_id("login-error")).to_have_text(mensagem)
+    expect(login.mensagem_erro).to_have_text(mensagem)
 
 
 def test_remover_unico_produto(pagina, base_url):
     entrar(pagina, base_url)
-    pagina.get_by_test_id("add-mochila").click()
-    expect(pagina.get_by_test_id("cart-count")).to_have_text("1")
-    pagina.get_by_test_id("open-cart").click()
-    pagina.get_by_test_id("remove-mochila").click()
-    expect(pagina.get_by_test_id("empty-cart")).to_be_visible()
-    expect(pagina.get_by_test_id("checkout")).to_be_disabled()
+
+    produtos = ProdutosPage(pagina)
+    produtos.adicionar_produto("mochila")
+
+    expect(produtos.contador_carrinho).to_have_text("1")
+    produtos.abrir_carrinho()
+
+    carrinho = CarrinhoPage(pagina)
+    carrinho.remover_produto("mochila")
+
+    expect(carrinho.itens).to_have_count(0)
+    expect(carrinho.mensagem_vazio).to_be_visible()
+    expect(carrinho.total).to_contain_text("0,00")
+    expect(carrinho.botao_checkout).to_be_disabled()
 
 
 def test_nome_obrigatorio(pagina, base_url):
     entrar(pagina, base_url)
-    pagina.get_by_test_id("add-mochila").click()
-    pagina.get_by_test_id("open-cart").click()
-    pagina.get_by_test_id("checkout").click()
-    pagina.get_by_test_id("continue-checkout").click()
-    expect(pagina.get_by_test_id("checkout-error")).to_have_text("Nome é obrigatório.")
+
+    produtos = ProdutosPage(pagina)
+    produtos.adicionar_produto("mochila")
+    produtos.abrir_carrinho()
+
+    carrinho = CarrinhoPage(pagina)
+    carrinho.ir_para_checkout()
+
+    checkout = CheckoutPage(pagina)
+
+    # Deixa apenas o nome vazio para isolar essa validação.
+    checkout.preencher_dados("", "Teste", "12345-678")
+    checkout.continuar()
+
+    expect(checkout.mensagem_erro).to_have_text(
+        "Nome é obrigatório."
+    )
+    expect(checkout.campo_nome).to_be_visible()
 
 
 def test_compra_completa(pagina, base_url):
     entrar(pagina, base_url)
-    pagina.get_by_test_id("add-mochila").click()
-    pagina.get_by_test_id("add-teclado").click()
-    expect(pagina.get_by_test_id("cart-count")).to_have_text("2")
-    pagina.get_by_test_id("open-cart").click()
-    expect(pagina.get_by_test_id("cart-total")).to_contain_text("219,80")
-    pagina.get_by_test_id("checkout").click()
-    pagina.get_by_test_id("first-name").fill("Pessoa")
-    pagina.get_by_test_id("last-name").fill("Teste")
-    pagina.get_by_test_id("postal-code").fill("12345-678")
-    pagina.get_by_test_id("continue-checkout").click()
-    expect(pagina.get_by_test_id("overview-total")).to_contain_text("219,80")
-    pagina.get_by_test_id("finish").click()
-    expect(pagina.get_by_test_id("order-success")).to_have_text("Pedido realizado com sucesso!")
-    expect(pagina.get_by_test_id("order-total")).to_contain_text("219,80")
-    pagina.get_by_test_id("back-products").click()
-    expect(pagina.get_by_test_id("cart-count")).to_have_text("0")
+
+    produtos = ProdutosPage(pagina)
+    produtos.adicionar_produto("mochila")
+    produtos.adicionar_produto("teclado")
+    expect(produtos.contador_carrinho).to_have_text("2")
+    produtos.abrir_carrinho()
+
+    carrinho = CarrinhoPage(pagina)
+    expect(carrinho.total).to_contain_text("219,80")
+    carrinho.ir_para_checkout()
+
+    checkout = CheckoutPage(pagina)
+    checkout.preencher_dados("Pessoa", "Teste", "12345-678")
+    checkout.continuar()
+
+    revisao = CheckoutOverviewPage(pagina)
+    expect(revisao.total).to_contain_text("219,80")
+    revisao.finalizar()
+
+    confirmacao = ConfirmacaoPage(pagina)
+    expect(confirmacao.mensagem_sucesso).to_have_text(
+        "Pedido realizado com sucesso!"
+    )
+    expect(confirmacao.total).to_contain_text("219,80")
+    confirmacao.voltar_aos_produtos()
+
+    expect(produtos.contador_carrinho).to_have_text("0")
 
 def test_cancelar_checkout(pagina, base_url):
     entrar(pagina, base_url)
 
-    # Adiciona a mochila e inicia o checkout.
-    pagina.get_by_test_id("add-mochila").click()
-    pagina.get_by_test_id("open-cart").click()
-    pagina.get_by_test_id("checkout").click()
+    produtos = ProdutosPage(pagina)
+    produtos.adicionar_produto("mochila")
+    produtos.abrir_carrinho()
 
-    # Confirma que chegamos ao checkout antes de cancelar.
-    expect(pagina.get_by_test_id("first-name")).to_be_visible()
-    pagina.get_by_test_id("cancel-checkout").click()
+    carrinho = CarrinhoPage(pagina)
+    carrinho.ir_para_checkout()
 
-    # Confirma o retorno ao carrinho e a preservação do item.
-    expect(pagina.get_by_test_id("cart-item")).to_have_count(1)
-    expect(pagina.get_by_test_id("cart-item-name")).to_have_text(
+    checkout = CheckoutPage(pagina)
+    expect(checkout.campo_nome).to_be_visible()
+    checkout.cancelar()
+
+    expect(carrinho.itens).to_have_count(1)
+    expect(carrinho.nomes_produtos).to_have_text(
         "Mochila de trabalho"
     )
-    expect(pagina.get_by_test_id("cart-total")).to_contain_text("129,90")
-    expect(pagina.get_by_test_id("checkout")).to_be_enabled()
+    expect(carrinho.total).to_contain_text("129,90")
+    expect(carrinho.botao_checkout).to_be_enabled()
 
 def test_sobrenome_obrigatorio(pagina, base_url):
     entrar(pagina, base_url)
 
-    pagina.get_by_test_id("add-mochila").click()
-    pagina.get_by_test_id("open-cart").click()
-    pagina.get_by_test_id("checkout").click()
+    produtos = ProdutosPage(pagina)
+    produtos.adicionar_produto("mochila")
+    produtos.abrir_carrinho()
 
-    # Preenche os outros campos e deixa apenas o sobrenome vazio.
-    pagina.get_by_test_id("first-name").fill("Pessoa")
-    pagina.get_by_test_id("postal-code").fill("12345-678")
-    pagina.get_by_test_id("continue-checkout").click()
+    carrinho = CarrinhoPage(pagina)
+    carrinho.ir_para_checkout()
 
-    # Confirma a mensagem e que o usuário permanece no checkout.
-    expect(pagina.get_by_test_id("checkout-error")).to_have_text(
+    checkout = CheckoutPage(pagina)
+    checkout.preencher_dados("Pessoa", "", "12345-678")
+    checkout.continuar()
+
+    expect(checkout.mensagem_erro).to_have_text(
         "Sobrenome é obrigatório."
     )
-    expect(pagina.get_by_test_id("last-name")).to_be_visible()
+    expect(checkout.campo_sobrenome).to_be_visible()
+
 
 @pytest.mark.parametrize(
     "cep, mensagem",
@@ -112,58 +153,60 @@ def test_sobrenome_obrigatorio(pagina, base_url):
 def test_cep_invalido(pagina, base_url, cep, mensagem):
     entrar(pagina, base_url)
 
-    pagina.get_by_test_id("add-mochila").click()
-    pagina.get_by_test_id("open-cart").click()
-    pagina.get_by_test_id("checkout").click()
+    produtos = ProdutosPage(pagina)
+    produtos.adicionar_produto("mochila")
+    produtos.abrir_carrinho()
 
-    # Preenche nome e sobrenome para isolar a validação do CEP.
-    pagina.get_by_test_id("first-name").fill("Pessoa")
-    pagina.get_by_test_id("last-name").fill("Teste")
-    pagina.get_by_test_id("postal-code").fill(cep)
-    pagina.get_by_test_id("continue-checkout").click()
+    carrinho = CarrinhoPage(pagina)
+    carrinho.ir_para_checkout()
 
-    expect(pagina.get_by_test_id("checkout-error")).to_have_text(mensagem)
-    expect(pagina.get_by_test_id("postal-code")).to_be_visible()
+    checkout = CheckoutPage(pagina)
+    checkout.preencher_dados("Pessoa", "Teste", cep)
+    checkout.continuar()
+
+    expect(checkout.mensagem_erro).to_have_text(mensagem)
+    expect(checkout.campo_cep).to_be_visible()
 
 def test_busca_sem_resultado(pagina, base_url):
     entrar(pagina, base_url)
 
-    pagina.get_by_test_id("search").fill("produto inexistente")
+    produtos = ProdutosPage(pagina)
+    produtos.buscar("produto inexistente")
 
-    expect(pagina.get_by_test_id("no-products")).to_have_text(
+    expect(produtos.mensagem_sem_resultados).to_have_text(
         "Nenhum produto encontrado."
     )
-    expect(pagina.get_by_test_id("product-card")).to_have_count(0)
+    expect(produtos.cartoes).to_have_count(0)
 
 def test_dois_produtos_no_carrinho(pagina, base_url):
     entrar(pagina, base_url)
+    produtos = ProdutosPage(pagina)
 
-    pagina.get_by_test_id("add-mochila").click()
-    pagina.get_by_test_id("add-teclado").click()
+    produtos.adicionar_produto("mochila")
+    produtos.adicionar_produto("teclado")
 
-    # O contador deve indicar dois produtos.
-    expect(pagina.get_by_test_id("cart-count")).to_have_text("2")
+    expect(produtos.contador_carrinho).to_have_text("2")
+    produtos.abrir_carrinho()
 
-    pagina.get_by_test_id("open-cart").click()
+    carrinho = CarrinhoPage(pagina)
 
-    # Confere a quantidade e os nomes dos itens no carrinho.
-    expect(pagina.get_by_test_id("cart-item")).to_have_count(2)
-    expect(pagina.get_by_test_id("cart-item-name")).to_have_text(
+    expect(carrinho.itens).to_have_count(2)
+    expect(carrinho.nomes_produtos).to_have_text(
         ["Mochila de trabalho", "Teclado compacto"]
     )
+    expect(carrinho.total).to_contain_text("219,80")
 
     # Mochila: R$ 129,90 + teclado: R$ 89,90.
     expect(pagina.get_by_test_id("cart-total")).to_contain_text("219,80")
 
 def test_ordenar_por_menor_preco(pagina, base_url):
     entrar(pagina, base_url)
+    produtos = ProdutosPage(pagina)
 
-    # Seleciona a opção "Menor preço".
-    pagina.get_by_test_id("sort").select_option("asc")
+    produtos.ordenar_por_menor_preco()
 
-    # Confere os quatro produtos na ordem esperada de preço.
-    expect(pagina.get_by_test_id("product-card")).to_have_count(4)
-    expect(pagina.get_by_test_id("product-name")).to_have_text(
+    expect(produtos.cartoes).to_have_count(4)
+    expect(produtos.nomes_produtos).to_have_text(
         [
             "Caderno de testes",
             "Mouse sem fio",

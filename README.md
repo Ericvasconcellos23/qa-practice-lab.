@@ -9,7 +9,9 @@ Laboratório educacional de automação Web para Eric Vasconcellos. Loja fictíc
 - Python: linguagem dos exemplos de teste.
 - Playwright: interação com navegador e assertions com espera automática.
 - Pytest: execução, fixtures e parametrização.
-- Page Object Model: exemplo em pages/login_page.py; o restante das ações está nos testes e pode ser refatorado como exercício.
+- Page Object Model: seletores e ações organizados em classes para login,
+  produtos, carrinho, checkout, revisão do pedido e confirmação.
+  Os testes mantêm as verificações dos resultados esperados.
 - Casos de teste e escrita BDD: especificação do comportamento. Não usamos Cucumber.
 
 Não há backend, API, SQL, contas reais ou pagamentos. Login é uma simulação, não um mecanismo seguro de autenticação. A sessão é isolada por aba. O número de pedido QA-001 é fixo para testes determinísticos. Testes Web não representam uma pirâmide completa. JavaScript/TypeScript com Playwright e Java com Selenium são trilhas futuras, não implementadas nem atribuídas ao autor. Não há ranking de linguagens do mercado neste projeto.
@@ -38,7 +40,10 @@ python -m pytest -v
 
 Se a ativação for bloqueada pelo PowerShell, use diretamente `.\.venv\Scripts\python.exe` no lugar de `python`, sem alterar políticas do sistema.
 
-A suíte contém 7 casos coletáveis (incluindo as 3 variações do login inválido). Isso é quantidade planejada, não resultado de execução. As dependências possuem intervalos de versão; após instalar, registre as versões realmente usadas com `python -m pip freeze`.
+A suíte contém 14 casos coletáveis, incluindo os casos parametrizados.
+A execução completa passou no Windows com Python 3.13.2 e Pytest 9.1.1
+em 03/10/2026. Após o último ajuste no Page Object de login, os três
+casos de login inválido também passaram.
 
 Opcional: definir outra URL no terminal dos testes:
 
@@ -114,4 +119,11 @@ Após executar e entender: "Usei uma loja educacional criada com assistência de
 
 - Verificada a apresentação dos quatro produtos em ordem crescente de preço.
 - Resultado da execução completa: 14 testes aprovados.
+
+## Refatoração com Page Object Model — 03/10/2026
+
+- Centralizados os seletores e as ações das telas em pages/.
+- Migrados os testes para utilizar os Page Objects.
+- Preservadas as verificações de login, carrinho, checkout, busca e ordenação.
+- A suíte completa passou com 14 testes durante a refatoração.
 

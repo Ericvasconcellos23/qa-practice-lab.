@@ -1,6 +1,7 @@
 class LoginPage:
     """Centraliza as ações da tela de login (Page Object Model)."""
     def __init__(self, pagina, base_url="http://localhost:8000"):
+        self.mensagem_erro = pagina.get_by_test_id("login-error")
         self.pagina = pagina
         self.base_url = base_url
 
