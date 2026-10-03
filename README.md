@@ -79,3 +79,9 @@ O upload ao GitHub não foi realizado automaticamente. GitHub Pages pode servir 
 ## Apresentação honesta
 
 Após executar e entender: "Usei uma loja educacional criada com assistência de IA para praticar testes Web em Python com Playwright e Pytest. Documentei cenários e utilizei Page Object Model no login." Acrescente seus resultados reais, sua contribuição e o link do repositório. Não declare domínio de tecnologias só porque aparecem no código gerado.
+
+## Ampliação da suíte — 03/10/2026
+
+- Adicionado teste de cancelamento do checkout.
+- Verificado o retorno ao carrinho com produto e total preservados.
+- Resultado da execução completa: 8 testes aprovados.
