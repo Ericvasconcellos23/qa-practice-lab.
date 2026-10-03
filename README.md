@@ -91,3 +91,9 @@ Após executar e entender: "Usei uma loja educacional criada com assistência de
 - Adicionado teste de sobrenome obrigatório no checkout.
 - Verificada a mensagem de erro e a permanência no checkout.
 - Resultado da execução completa: 9 testes aprovados.
+
+## Validação de CEP — 03/10/2026
+
+- Adicionados dois casos parametrizados: CEP vazio e CEP inválido.
+- Verificadas as mensagens de erro e a permanência no checkout.
+- Resultado da execução completa: 11 testes aprovados.

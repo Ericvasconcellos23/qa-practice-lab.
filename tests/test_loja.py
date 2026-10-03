@@ -101,3 +101,26 @@ def test_sobrenome_obrigatorio(pagina, base_url):
         "Sobrenome é obrigatório."
     )
     expect(pagina.get_by_test_id("last-name")).to_be_visible()
+
+@pytest.mark.parametrize(
+    "cep, mensagem",
+    [
+        ("", "CEP é obrigatório."),
+        ("123", "CEP deve ter 8 dígitos."),
+    ],
+)
+def test_cep_invalido(pagina, base_url, cep, mensagem):
+    entrar(pagina, base_url)
+
+    pagina.get_by_test_id("add-mochila").click()
+    pagina.get_by_test_id("open-cart").click()
+    pagina.get_by_test_id("checkout").click()
+
+    # Preenche nome e sobrenome para isolar a validação do CEP.
+    pagina.get_by_test_id("first-name").fill("Pessoa")
+    pagina.get_by_test_id("last-name").fill("Teste")
+    pagina.get_by_test_id("postal-code").fill(cep)
+    pagina.get_by_test_id("continue-checkout").click()
+
+    expect(pagina.get_by_test_id("checkout-error")).to_have_text(mensagem)
+    expect(pagina.get_by_test_id("postal-code")).to_be_visible()
