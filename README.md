@@ -110,3 +110,8 @@ Após executar e entender: "Usei uma loja educacional criada com assistência de
 - Verificados os nomes dos produtos, a quantidade e o total de R$ 219,80.
 - Resultado da execução completa: 13 testes aprovados.
 
+## Ordenação por menor preço — 03/10/2026
+
+- Verificada a apresentação dos quatro produtos em ordem crescente de preço.
+- Resultado da execução completa: 14 testes aprovados.
+

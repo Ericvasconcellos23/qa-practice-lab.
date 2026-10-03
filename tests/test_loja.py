@@ -154,3 +154,20 @@ def test_dois_produtos_no_carrinho(pagina, base_url):
 
     # Mochila: R$ 129,90 + teclado: R$ 89,90.
     expect(pagina.get_by_test_id("cart-total")).to_contain_text("219,80")
+
+def test_ordenar_por_menor_preco(pagina, base_url):
+    entrar(pagina, base_url)
+
+    # Seleciona a opção "Menor preço".
+    pagina.get_by_test_id("sort").select_option("asc")
+
+    # Confere os quatro produtos na ordem esperada de preço.
+    expect(pagina.get_by_test_id("product-card")).to_have_count(4)
+    expect(pagina.get_by_test_id("product-name")).to_have_text(
+        [
+            "Caderno de testes",
+            "Mouse sem fio",
+            "Teclado compacto",
+            "Mochila de trabalho",
+        ]
+    )
