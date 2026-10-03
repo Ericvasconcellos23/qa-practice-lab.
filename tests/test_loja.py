@@ -134,3 +134,23 @@ def test_busca_sem_resultado(pagina, base_url):
         "Nenhum produto encontrado."
     )
     expect(pagina.get_by_test_id("product-card")).to_have_count(0)
+
+def test_dois_produtos_no_carrinho(pagina, base_url):
+    entrar(pagina, base_url)
+
+    pagina.get_by_test_id("add-mochila").click()
+    pagina.get_by_test_id("add-teclado").click()
+
+    # O contador deve indicar dois produtos.
+    expect(pagina.get_by_test_id("cart-count")).to_have_text("2")
+
+    pagina.get_by_test_id("open-cart").click()
+
+    # Confere a quantidade e os nomes dos itens no carrinho.
+    expect(pagina.get_by_test_id("cart-item")).to_have_count(2)
+    expect(pagina.get_by_test_id("cart-item-name")).to_have_text(
+        ["Mochila de trabalho", "Teclado compacto"]
+    )
+
+    # Mochila: R$ 129,90 + teclado: R$ 89,90.
+    expect(pagina.get_by_test_id("cart-total")).to_contain_text("219,80")

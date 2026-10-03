@@ -104,3 +104,9 @@ Após executar e entender: "Usei uma loja educacional criada com assistência de
 - Verificada a mensagem “Nenhum produto encontrado.”
 - Confirmado que nenhum cartão de produto é exibido.
 - Resultado da execução completa: 12 testes aprovados.
+
+## Dois produtos no carrinho — 03/10/2026
+
+- Verificados os nomes dos produtos, a quantidade e o total de R$ 219,80.
+- Resultado da execução completa: 13 testes aprovados.
+
