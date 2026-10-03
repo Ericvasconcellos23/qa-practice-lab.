@@ -85,3 +85,9 @@ Após executar e entender: "Usei uma loja educacional criada com assistência de
 - Adicionado teste de cancelamento do checkout.
 - Verificado o retorno ao carrinho com produto e total preservados.
 - Resultado da execução completa: 8 testes aprovados.
+
+## Validação de sobrenome — 03/10/2026
+
+- Adicionado teste de sobrenome obrigatório no checkout.
+- Verificada a mensagem de erro e a permanência no checkout.
+- Resultado da execução completa: 9 testes aprovados.

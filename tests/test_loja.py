@@ -83,3 +83,21 @@ def test_cancelar_checkout(pagina, base_url):
     )
     expect(pagina.get_by_test_id("cart-total")).to_contain_text("129,90")
     expect(pagina.get_by_test_id("checkout")).to_be_enabled()
+
+def test_sobrenome_obrigatorio(pagina, base_url):
+    entrar(pagina, base_url)
+
+    pagina.get_by_test_id("add-mochila").click()
+    pagina.get_by_test_id("open-cart").click()
+    pagina.get_by_test_id("checkout").click()
+
+    # Preenche os outros campos e deixa apenas o sobrenome vazio.
+    pagina.get_by_test_id("first-name").fill("Pessoa")
+    pagina.get_by_test_id("postal-code").fill("12345-678")
+    pagina.get_by_test_id("continue-checkout").click()
+
+    # Confirma a mensagem e que o usuário permanece no checkout.
+    expect(pagina.get_by_test_id("checkout-error")).to_have_text(
+        "Sobrenome é obrigatório."
+    )
+    expect(pagina.get_by_test_id("last-name")).to_be_visible()
