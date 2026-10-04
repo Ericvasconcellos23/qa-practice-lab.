@@ -85,45 +85,42 @@ O upload ao GitHub não foi realizado automaticamente. GitHub Pages pode servir 
 
 Após executar e entender: "Usei uma loja educacional criada com assistência de IA para praticar testes Web em Python com Playwright e Pytest. Documentei cenários e utilizei Page Object Model no login." Acrescente seus resultados reais, sua contribuição e o link do repositório. Não declare domínio de tecnologias só porque aparecem no código gerado.
 
-## Ampliação da suíte — 03/10/2026
+## Cobertura atual da automação
 
-- Adicionado teste de cancelamento do checkout.
-- Verificado o retorno ao carrinho com produto e total preservados.
-- Resultado da execução completa: 8 testes aprovados.
+A suíte automatizada possui 14 casos de teste executados com Pytest e Playwright.
 
-## Validação de sobrenome — 03/10/2026
+Os principais cenários cobertos são:
 
-- Adicionado teste de sobrenome obrigatório no checkout.
-- Verificada a mensagem de erro e a permanência no checkout.
-- Resultado da execução completa: 9 testes aprovados.
+- Login válido.
+- Login com senha incorreta.
+- Login com e-mail vazio.
+- Login com senha vazia.
+- Remoção de produto do carrinho.
+- Validação de nome obrigatório no checkout.
+- Validação de sobrenome obrigatório.
+- Validação de CEP vazio e inválido.
+- Fluxo completo de compra.
+- Cancelamento do checkout.
+- Busca por produto inexistente.
+- Adição de múltiplos produtos ao carrinho.
+- Ordenação de produtos por menor preço.
 
-## Validação de CEP — 03/10/2026
+Os testes Web utilizam Page Object Model (POM) para separar as interações com as páginas da lógica dos testes.
 
-- Adicionados dois casos parametrizados: CEP vazio e CEP inválido.
-- Verificadas as mensagens de erro e a permanência no checkout.
-- Resultado da execução completa: 11 testes aprovados.
+### Resultado da última execução
 
-## Busca sem resultado — 03/10/2026
+Ambiente utilizado:
 
-- Adicionado teste de busca por produto inexistente.
-- Verificada a mensagem “Nenhum produto encontrado.”
-- Confirmado que nenhum cartão de produto é exibido.
-- Resultado da execução completa: 12 testes aprovados.
+- Windows
+- Python 3.13.2
+- Pytest 9.1.1
+- Playwright com Chromium
 
-## Dois produtos no carrinho — 03/10/2026
+Resultado:
 
-- Verificados os nomes dos produtos, a quantidade e o total de R$ 219,80.
-- Resultado da execução completa: 13 testes aprovados.
+```text
+collected 14 items
 
-## Ordenação por menor preço — 03/10/2026
+tests/test_loja.py .............. [100%]
 
-- Verificada a apresentação dos quatro produtos em ordem crescente de preço.
-- Resultado da execução completa: 14 testes aprovados.
-
-## Refatoração com Page Object Model — 03/10/2026
-
-- Centralizados os seletores e as ações das telas em pages/.
-- Migrados os testes para utilizar os Page Objects.
-- Preservadas as verificações de login, carrinho, checkout, busca e ordenação.
-- A suíte completa passou com 14 testes durante a refatoração.
-
+14 passed

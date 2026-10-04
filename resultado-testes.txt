@@ -1,0 +1,10 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\qa-practice-lab
+configfile: pytest.ini
+testpaths: tests
+collected 14 items
+
+tests\test_loja.py ..............                                        [100%]
+
+======================= 14 passed in 115.84s (0:01:55) ========================
